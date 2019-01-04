@@ -12,71 +12,35 @@ public class Reminder {
     private Long id;
 
     private String title;
-    private String content;
-    private Date modDate;
+    //private String content;
+    //private Date modDate;
     private Date remindDate;
-    private Date eventDate;
-
-    public Reminder() {
-        this.modDate = new Date();
-    }
-
-    @Generated(hash = 1739681815)
-    public Reminder(Long id, String title, String content, Date modDate,
-            Date remindDate, Date eventDate) {
+    //private Date eventDate;
+    @Generated(hash = 1525862740)
+    public Reminder(Long id, String title, Date remindDate) {
         this.id = id;
         this.title = title;
-        this.content = content;
-        this.modDate = modDate;
         this.remindDate = remindDate;
-        this.eventDate = eventDate;
     }
-
+    @Generated(hash = 4427342)
+    public Reminder() {
+    }
     public Long getId() {
         return this.id;
     }
-
     public void setId(Long id) {
         this.id = id;
     }
-
     public String getTitle() {
         return this.title;
     }
-
     public void setTitle(String title) {
         this.title = title;
     }
-
-    public String getContent() {
-        return this.content;
-    }
-
-    public void setContent(String content) {
-        this.content = content;
-    }
-
-    public Date getModDate() {
-        return this.modDate;
-    }
-
-    public void setModDate(Date modDate) {
-        this.modDate = modDate;
-    }
-
     public Date getRemindDate() {
         return this.remindDate;
     }
-
     public void setRemindDate(Date remindDate) {
         this.remindDate = remindDate;
-    }
-
-    public Date getEventDate() {
-        return this.eventDate;
-    }
-
-    public void setEventDate(Date eventDate) {
-        this.eventDate = eventDate;
     }
 }

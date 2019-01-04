@@ -74,7 +74,7 @@ public class MainAdapter extends RecyclerView.Adapter<MainAdapter.MainViewHolder
         noteDao = daoSession.getNoteDao();
         reminderDao = daoSession.getReminderDao();
         noteQuery = noteDao.queryBuilder().orderDesc(NoteDao.Properties.Date).build();
-        reminderQuery = reminderDao.queryBuilder().orderDesc(ReminderDao.Properties.ModDate).build();
+        reminderQuery = reminderDao.queryBuilder().orderDesc(ReminderDao.Properties.RemindDate).build();
         LoadItems();
 
     }

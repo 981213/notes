@@ -63,7 +63,7 @@ public class ReminderService extends JobIntentService {
                 NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(this, CHANNEL_ID);
                 mBuilder.setSmallIcon(R.mipmap.ic_launcher);
                 mBuilder.setContentTitle("Reminder");
-                mBuilder.setContentText(creminder.getContent());
+                mBuilder.setContentText(creminder.getTitle());
                 mBuilder.setPriority(NotificationCompat.PRIORITY_DEFAULT);
                 notificationManager.notify(1, mBuilder.build());
             }

@@ -167,7 +167,6 @@ public class MainActivity extends AppCompatActivity
             public void onClick(View view) {
                 Reminder entry = new Reminder();
                 entry.setTitle("");
-                entry.setContent("");
                 reminderDao.insert(entry);
                 hideFABMenu();
                 Intent intent = new Intent(MainActivity.this, ListActivity.class);

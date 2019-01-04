@@ -78,16 +78,13 @@ public class ListActivity extends android.app.ListActivity {
                 }
             }
         });
-        setTimeButton = (Button) findViewById(R.id.set_time);
-        setTimeButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                datePicker();
-                Calendar cal = Calendar.getInstance();
-                cal.set(mYear, mMonth, mDay, mHour, mMinute);
-                Date date = cal.getTime();
-            }
-        });
+        Calendar ccal = Calendar.getInstance();
+        mYear = ccal.get(Calendar.YEAR);
+        mMonth = ccal.get(Calendar.MONTH);
+        mDay = ccal.get(Calendar.DATE);
+        mHour = ccal.get(Calendar.HOUR_OF_DAY);
+        mMinute = ccal.get(Calendar.MINUTE);
+
 
         Intent intent = getIntent();
         reminder_id = intent.getLongExtra(MainActivity.RECORD_ID, -1);
@@ -98,6 +95,15 @@ public class ListActivity extends android.app.ListActivity {
 
         reminderEntryDao = daoSession.getReminderEntryDao();
         items = reminderEntryDao.queryBuilder().where(ReminderEntryDao.Properties.ReminderId.eq(reminder_id)).list();
+
+        setTimeButton = (Button) findViewById(R.id.set_time);
+        setTimeButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                datePicker();
+
+            }
+        });
 
         myAdapter = new MyAdapter();
         setListAdapter(myAdapter);
@@ -117,10 +123,10 @@ public class ListActivity extends android.app.ListActivity {
     private void datePicker(){
 
         // Get Current Date
-        final Calendar c = Calendar.getInstance();
-        mYear = c.get(Calendar.YEAR);
-        mMonth = c.get(Calendar.MONTH);
-        mDay = c.get(Calendar.DAY_OF_MONTH);
+//        final Calendar c = Calendar.getInstance();
+//        mYear = c.get(Calendar.YEAR);
+//        mMonth = c.get(Calendar.MONTH);
+//        mDay = c.get(Calendar.DAY_OF_MONTH);
 
         DatePickerDialog datePickerDialog = new DatePickerDialog(this,
                 new DatePickerDialog.OnDateSetListener() {
@@ -128,6 +134,9 @@ public class ListActivity extends android.app.ListActivity {
                     @Override
                     public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
 
+                        mYear = year;
+                        mMonth = monthOfYear;
+                        mDay = dayOfMonth;
                         //date_time = dayOfMonth + "-" + (monthOfYear + 1) + "-" + year;
                         //*************Call Time Picker Here ********************
                         timePicker();
@@ -138,9 +147,9 @@ public class ListActivity extends android.app.ListActivity {
 
     private void timePicker(){
         // Get Current Time
-        final Calendar c = Calendar.getInstance();
-        mHour = c.get(Calendar.HOUR_OF_DAY);
-        mMinute = c.get(Calendar.MINUTE);
+//        final Calendar c = Calendar.getInstance();
+//        mHour = c.get(Calendar.HOUR_OF_DAY);
+//        mMinute = c.get(Calendar.MINUTE);
 
         // Launch Time Picker Dialog
         TimePickerDialog timePickerDialog = new TimePickerDialog(this,
@@ -152,11 +161,18 @@ public class ListActivity extends android.app.ListActivity {
                         mHour = hourOfDay;
                         mMinute = minute;
 
+                        Calendar cal = Calendar.getInstance();
+                        cal.set(mYear, mMonth, mDay, mHour, mMinute);
+                        Date date = cal.getTime();
+                        contentEditText.setText(date.toString());
+                        Log.i("DATE", "onClick: " + date.toString());
+                        reminder.setRemindDate(date);
+
                         //date_time += (" " + hourOfDay + ":" + minute);
                         //titleEditText.setText(date_time);
                         //et_show_date_time.setText(date_time+" "+hourOfDay + ":" + minute);
                     }
-                }, mHour, mMinute, false);
+                }, mHour, mMinute, true);
         timePickerDialog.show();
     }
 
