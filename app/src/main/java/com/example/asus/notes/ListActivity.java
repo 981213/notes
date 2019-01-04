@@ -14,6 +14,8 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import java.util.ArrayList;
+
 import static android.provider.ContactsContract.CommonDataKinds.Website.URL;
 
 public class ListActivity extends android.app.ListActivity {
@@ -21,8 +23,9 @@ public class ListActivity extends android.app.ListActivity {
     private EditText titleEditText;
     private EditText contentEditText;
     private Button addItemButton;
-    private String[] items = {"buy apples", "buy bananas"};
-    private static int contentCnt;
+//    private String[] items = new String[20];
+    private ArrayList<String> items;
+    private MyAdapter myAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,6 +33,7 @@ public class ListActivity extends android.app.ListActivity {
         setContentView(R.layout.activity_list);
         titleEditText = (EditText) findViewById(R.id.list_title_input);
         contentEditText = (EditText) findViewById(R.id.list_content_input);
+        items = new ArrayList<String>();
         addItemButton = (Button) findViewById(R.id.add_item);
         addItemButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -37,30 +41,31 @@ public class ListActivity extends android.app.ListActivity {
                 String content = contentEditText.getText().toString();
                 if (content != null){
                     Log.d("CONTENT", "SUCCESSFUL");
-                    items[contentCnt++] = content;
+                    items.add(content);
+                    myAdapter.notifyDataSetChanged();
                     contentEditText.clearComposingText();
                 }
             }
         });
-        contentCnt = 0; //当有数据存储时，等于上一次保留的count
-        setListAdapter(new MyAdapter());
+        myAdapter = new MyAdapter();
+        setListAdapter(myAdapter);
     }
 
 
     private class MyAdapter extends BaseAdapter {
         @Override
         public int getCount() {
-            return items.length;
+            return items.size();
         }
 
         @Override
         public String getItem(int i) {
-            return items[i];
+            return items.get(i);
         }
 
         @Override
         public long getItemId(int i) {
-            return items[i].hashCode();
+            return items.get(i).hashCode();
         }
 
         @Override
