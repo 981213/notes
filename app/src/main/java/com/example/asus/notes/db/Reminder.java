@@ -15,19 +15,21 @@ public class Reminder {
     private String content;
     private Date modDate;
     private Date remindDate;
+    private Date eventDate;
 
     public Reminder() {
         this.modDate = new Date();
     }
 
-    @Generated(hash = 1557273918)
+    @Generated(hash = 1739681815)
     public Reminder(Long id, String title, String content, Date modDate,
-            Date remindDate) {
+            Date remindDate, Date eventDate) {
         this.id = id;
         this.title = title;
         this.content = content;
         this.modDate = modDate;
         this.remindDate = remindDate;
+        this.eventDate = eventDate;
     }
 
     public Long getId() {
@@ -68,5 +70,13 @@ public class Reminder {
 
     public void setRemindDate(Date remindDate) {
         this.remindDate = remindDate;
+    }
+
+    public Date getEventDate() {
+        return this.eventDate;
+    }
+
+    public void setEventDate(Date eventDate) {
+        this.eventDate = eventDate;
     }
 }
