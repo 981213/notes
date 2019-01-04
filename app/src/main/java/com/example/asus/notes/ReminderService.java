@@ -60,11 +60,10 @@ public class ReminderService extends JobIntentService {
             reminderQueryBuilder.where(ReminderDao.Properties.RemindDate.ge(cur), ReminderDao.Properties.RemindDate.le(nxt));
             List<Reminder> reminders = reminderQueryBuilder.list();
             for (Reminder creminder : reminders) {
-                Log.i(TAG, "onHandleIntent: Trigger reminder: " + creminder.getTitle());
                 NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(this, CHANNEL_ID);
                 mBuilder.setSmallIcon(R.mipmap.ic_launcher);
                 mBuilder.setContentTitle("Reminder");
-                mBuilder.setContentText(creminder.getTitle());
+                mBuilder.setContentText(creminder.getContent());
                 mBuilder.setPriority(NotificationCompat.PRIORITY_DEFAULT);
                 notificationManager.notify(1, mBuilder.build());
             }

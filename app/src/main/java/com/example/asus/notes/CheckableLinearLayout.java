@@ -49,6 +49,7 @@ public class CheckableLinearLayout extends LinearLayout implements Checkable {
         }
     }
 
+
     public void toggle() {
         setChecked(!mChecked);
     }

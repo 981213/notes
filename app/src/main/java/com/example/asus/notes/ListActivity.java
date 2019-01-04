@@ -3,6 +3,7 @@ package com.example.asus.notes;
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
 import android.content.Context;
+import android.content.Intent;
 import android.drm.DrmStore;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -18,25 +19,39 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.TimePicker;
 
+import com.example.asus.notes.db.DaoSession;
+import com.example.asus.notes.db.Note;
+import com.example.asus.notes.db.NoteDao;
+import com.example.asus.notes.db.Reminder;
+import com.example.asus.notes.db.ReminderDao;
+import com.example.asus.notes.db.ReminderEntry;
+import com.example.asus.notes.db.ReminderEntryDao;
+
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
-
+import java.util.List;
 
 
 public class ListActivity extends android.app.ListActivity {
 
     private EditText titleEditText;
     private EditText contentEditText;
-    private String title;
     private Button addItemButton;
     private Button setTimeButton;
 //    private String[] items = new String[20];
-    private ArrayList<String> items;
+    //private ArrayList<String> items;
+    private List<ReminderEntry> items;
     private MyAdapter myAdapter;
 
     private int mYear, mMonth, mDay, mHour, mMinute;
     //private String date_time;
+
+    private ReminderDao reminderDao;
+    private ReminderEntryDao reminderEntryDao;
+    private long reminder_id;
+    private Reminder reminder;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,7 +59,6 @@ public class ListActivity extends android.app.ListActivity {
         setContentView(R.layout.activity_list);
         titleEditText = (EditText) findViewById(R.id.list_title_input);
         contentEditText = (EditText) findViewById(R.id.list_content_input);
-        title = titleEditText.getText().toString();
         items = new ArrayList<>();
         addItemButton = (Button) findViewById(R.id.add_item);
         addItemButton.setOnClickListener(new View.OnClickListener() {
@@ -53,7 +67,12 @@ public class ListActivity extends android.app.ListActivity {
                 String content = contentEditText.getText().toString();
                 if (content != null){
                     Log.d("CONTENT", "SUCCESSFUL");
-                    items.add(content);
+                    ReminderEntry reminderEntry = new ReminderEntry();
+                    reminderEntry.setContent(content);
+                    reminderEntry.setReminderId(reminder_id);
+                    reminderEntryDao.insert(reminderEntry);
+                    items = reminderEntryDao.queryBuilder().where(ReminderEntryDao.Properties.ReminderId.eq(reminder_id)).list();
+                    //items.add(content);
                     myAdapter.notifyDataSetChanged();
                     contentEditText.setText("");
                 }
@@ -69,8 +88,30 @@ public class ListActivity extends android.app.ListActivity {
                 Date date = cal.getTime();
             }
         });
+
+        Intent intent = getIntent();
+        reminder_id = intent.getLongExtra(MainActivity.RECORD_ID, -1);
+        DaoSession daoSession = ((NotesApp) getApplication()).getDaoSession();
+        reminderDao = daoSession.getReminderDao();
+        reminder = reminderDao.queryBuilder().where(ReminderDao.Properties.Id.eq(reminder_id)).list().get(0);
+        titleEditText.setText(reminder.getTitle());
+
+        reminderEntryDao = daoSession.getReminderEntryDao();
+        items = reminderEntryDao.queryBuilder().where(ReminderEntryDao.Properties.ReminderId.eq(reminder_id)).list();
+
         myAdapter = new MyAdapter();
         setListAdapter(myAdapter);
+    }
+
+    public void saveReminder(){
+        reminder.setTitle(titleEditText.getText().toString());
+        reminderDao.update(reminder);
+    }
+
+    @Override
+    protected void onPause() {
+        saveReminder();
+        super.onPause();
     }
 
     private void datePicker(){
@@ -126,7 +167,7 @@ public class ListActivity extends android.app.ListActivity {
         }
 
         @Override
-        public String getItem(int i) {
+        public ReminderEntry getItem(int i) {
             return items.get(i);
         }
 
@@ -142,7 +183,7 @@ public class ListActivity extends android.app.ListActivity {
             }
 
             ((TextView) convertView.findViewById(R.id.text1))
-                    .setText(getItem(i));
+                    .setText(getItem(i).getContent());
             return convertView;
         }
     }
