@@ -1,0 +1,10 @@
+<!--侧边栏顶部背景-->
+<shape xmlns:android="http://schemas.android.com/apk/res/android"
+    android:shape="rectangle">
+    <gradient
+        android:angle="135"
+        android:centerColor="#1882bf"
+        android:endColor="#10629c"
+        android:startColor="#6fc0f5"
+        android:type="linear" />
+</shape>
