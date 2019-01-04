@@ -25,9 +25,9 @@ public class MainActivity extends AppCompatActivity
     private FloatingActionButton fab01Add;
     private boolean isAdd = false;
     private RelativeLayout rlAddBill;
-    private int[] llId = new int[]{R.id.ll01, R.id.ll02, R.id.ll03};
+    private int[] llId = new int[]{R.id.ll01, R.id.ll02};
     private LinearLayout[] ll = new LinearLayout[llId.length];
-    private int[] fabId = new int[]{R.id.miniFab01, R.id.miniFab02, R.id.miniFab03};
+    private int[] fabId = new int[]{R.id.miniFab01, R.id.miniFab02};
     private FloatingActionButton[] fab = new FloatingActionButton[fabId.length];
     private AnimatorSet addBillTranslate1;
     private AnimatorSet addBillTranslate2;
@@ -63,7 +63,6 @@ public class MainActivity extends AppCompatActivity
         fab01Add = (FloatingActionButton) findViewById(R.id.fab01Add);
         FloatingActionButton miniFab01 = (FloatingActionButton) findViewById(R.id.miniFab01);
         FloatingActionButton miniFab02 = (FloatingActionButton) findViewById(R.id.miniFab02);
-        FloatingActionButton miniFab03 = (FloatingActionButton) findViewById(R.id.miniFab03);
         //对add悬浮纽的初始化
         rlAddBill = (RelativeLayout) findViewById(R.id.rlAddBill);
         for (int i = 0; i < llId.length; i++) {
@@ -84,27 +83,18 @@ public class MainActivity extends AppCompatActivity
                     addBillTranslate1.start();
                     addBillTranslate2.setTarget(ll[1]);
                     addBillTranslate2.start();
-                    addBillTranslate3.setTarget(ll[2]);
-                    addBillTranslate3.start();
                 }
             }
         });
-        //照片悬浮纽的点击事件
+        //提醒事项悬浮纽的点击事件
         miniFab01.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 hideFABMenu();
             }
         });
-        //提醒事项悬浮纽的点击事件
-        miniFab02.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                hideFABMenu();
-            }
-        });
         //备忘录悬浮纽的点击事件
-        miniFab03.setOnClickListener(new View.OnClickListener() {
+        miniFab02.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 hideFABMenu();
@@ -159,16 +149,9 @@ public class MainActivity extends AppCompatActivity
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
         int id = item.getItemId();
-
-        if (id == R.id.nav_camera) {
-
-        } else if (id == R.id.nav_list) {
+        if (id == R.id.nav_list) {
 
         } else if (id == R.id.nav_document) {
-
-        } else if (id == R.id.nav_share) {
-
-        } else if (id == R.id.nav_send) {
 
         }
 

@@ -7,10 +7,6 @@
 
     <group android:checkableBehavior="single">
         <item
-            android:id="@+id/nav_camera"
-            android:icon="@mipmap/camera"
-            android:title="照片" />
-        <item
             android:id="@+id/nav_list"
             android:icon="@mipmap/list"
             android:title="提醒事项" />
@@ -20,19 +16,6 @@
             android:title="备忘录" />
 
     </group >
-
-<item android:title="communicate">
-        <menu>
-            <item
-                android:id="@+id/nav_share"
-                android:icon="@drawable/ic_menu_share"
-                android:title="分享" />
-            <item
-                android:id="@+id/nav_send"
-                android:icon="@drawable/ic_menu_send"
-                android:title="发送" />
-        </menu>
-</item>
 
 
 </menu>

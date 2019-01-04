@@ -13,6 +13,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:theme="@style/AppTheme.AppBarOverlay">
+
         <android.support.v7.widget.Toolbar
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
@@ -24,107 +25,75 @@
     <!--界面背部的内容，即recyclerview-->
     <include layout="@layout/content_main" />
 
-<!--relativelayout中放三个小悬浮纽-->
+    <!--relativelayout中放2个小悬浮纽-->
     <RelativeLayout
-             android:id="@+id/rlAddBill"
-             android:layout_width="match_parent"
-             android:layout_height="match_parent"
-             android:background="#80000000"
-            android:visibility="gone"
-             >
-                 <LinearLayout
-                     android:id="@+id/ll01"
-                     android:layout_width="match_parent"
-                     android:layout_height="wrap_content"
-                     android:layout_alignParentBottom="true"
-                     android:layout_marginBottom="100dp"
-                     android:orientation="horizontal"
-                     >
-                         <TextView
-                            android:layout_toLeftOf="@+id/miniFab01"
-                            android:layout_width="0dp"
-                             android:layout_height="wrap_content"
-                             android:layout_weight="1"
-                             android:text="照片"
-                             android:textSize="15sp"
-                             android:textColor="@android:color/white"
-                             android:layout_gravity="center_vertical"
-                             android:gravity="right"
-                            android:paddingBottom="5dp"
-                           />
-                         <android.support.design.widget.FloatingActionButton
-                             android:id="@+id/miniFab01"
-                             android:layout_width="wrap_content"
-                             android:layout_height="wrap_content"
-                             android:src="@mipmap/camera"
-                             android:layout_marginRight="25dp"
-                             app:fabSize="mini"
-                             app:elevation="5dp"
-                            app:backgroundTint="#e46e3b"
-                            />
-                 </LinearLayout>
-                <LinearLayout
-                     android:id="@+id/ll02"
-                    android:layout_width="match_parent"
-                     android:layout_height="wrap_content"
-                    android:layout_marginBottom="10dp"
-                     android:orientation="horizontal"
-                     android:layout_above="@+id/ll01"
-                     >
-                 <TextView
-                     android:layout_toLeftOf="@+id/miniFab02"
-                     android:layout_width="0dp"
-                     android:layout_height="wrap_content"
-                     android:layout_weight="1"
-                     android:text="提醒事项"
-                     android:textSize="15sp"
-                     android:textColor="@android:color/white"
-                     android:layout_gravity="center_vertical"
-                     android:gravity="right"
-                     android:paddingBottom="5dp"
-                   />
-                 <android.support.design.widget.FloatingActionButton
-                     android:id="@+id/miniFab02"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                  android:src="@mipmap/list"
-                  android:layout_marginRight="25dp"
-                    app:fabSize="mini"
-                app:elevation="5dp"
-                    app:backgroundTint="#07bc13"
-                />
-           </LinearLayout>
-          <LinearLayout
-             android:id="@+id/ll03"
-               android:layout_width="match_parent"
-             android:layout_height="wrap_content"
-              android:layout_marginBottom="10dp"
-            android:orientation="horizontal"
-             android:layout_above="@+id/ll02"
-            >
-             <TextView
-                 android:layout_toLeftOf="@+id/miniFab02"
-                 android:layout_width="0dp"
-                 android:layout_height="wrap_content"
-                 android:layout_weight="1"
-                  android:text="备忘录"
-                 android:textSize="15sp"
-                 android:textColor="@android:color/white"
+        android:id="@+id/rlAddBill"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#80000000"
+        android:visibility="gone">
+
+        <LinearLayout
+            android:id="@+id/ll01"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_marginBottom="100dp"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
+                android:layout_toLeftOf="@+id/miniFab01"
+                android:layout_weight="1"
                 android:gravity="right"
-                 android:paddingBottom="5dp"
-               />
+                android:paddingBottom="5dp"
+                android:text="提醒事项"
+                android:textColor="@android:color/white"
+                android:textSize="15sp" />
+
             <android.support.design.widget.FloatingActionButton
-                  android:id="@+id/miniFab03"
+                android:id="@+id/miniFab01"
                 android:layout_width="wrap_content"
-                  android:layout_height="wrap_content"
-                     android:src="@mipmap/document"
-                     android:layout_marginRight="25dp"
-                     app:fabSize="mini"
-                   app:elevation="5dp"
-                    app:backgroundTint="#e63b3b"
-                    />
-             </LinearLayout>
+                android:layout_height="wrap_content"
+                android:layout_marginRight="25dp"
+                android:src="@mipmap/list"
+                app:backgroundTint="#07bc13"
+                app:elevation="5dp"
+                app:fabSize="mini" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/ll02"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_above="@+id/ll01"
+            android:layout_marginBottom="10dp"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_toLeftOf="@+id/miniFab02"
+                android:layout_weight="1"
+                android:gravity="right"
+                android:paddingBottom="5dp"
+                android:text="备忘录"
+                android:textColor="@android:color/white"
+                android:textSize="15sp" />
+
+            <android.support.design.widget.FloatingActionButton
+                android:id="@+id/miniFab02"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="25dp"
+                android:src="@mipmap/document"
+                app:backgroundTint="#e63b3b"
+                app:elevation="5dp"
+                app:fabSize="mini" />
+        </LinearLayout>
     </RelativeLayout>
 
     <!--主界面中右下角的ADD悬浮纽-->
@@ -135,8 +104,8 @@
         android:layout_gravity="bottom|end"
         android:layout_margin="@dimen/fab_margin"
         android:src="@mipmap/add"
-        app:fabSize="normal"
+        app:backgroundTint="#0bacec"
         app:elevation="5dp"
-        app:backgroundTint="#0bacec" />
+        app:fabSize="normal" />
 
 </android.support.design.widget.CoordinatorLayout>
