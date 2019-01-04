@@ -31,7 +31,6 @@ public class MainActivity extends AppCompatActivity
     private FloatingActionButton[] fab = new FloatingActionButton[fabId.length];
     private AnimatorSet addBillTranslate1;
     private AnimatorSet addBillTranslate2;
-    private AnimatorSet addBillTranslate3;
 
 
     @Override
@@ -113,7 +112,6 @@ public class MainActivity extends AppCompatActivity
     private void setDefaultValues() {
         addBillTranslate1 = (AnimatorSet) AnimatorInflater.loadAnimator(this, R.animator.add_bill_anim);
         addBillTranslate2 = (AnimatorSet) AnimatorInflater.loadAnimator(this, R.animator.add_bill_anim);
-        addBillTranslate3 = (AnimatorSet) AnimatorInflater.loadAnimator(this, R.animator.add_bill_anim);
     }
 
 
