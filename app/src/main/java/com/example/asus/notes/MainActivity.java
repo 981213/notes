@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.support.design.widget.NavigationView;
@@ -19,10 +20,14 @@ import android.view.MenuItem;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 
+import com.example.asus.notes.db.DaoSession;
+
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
     private RecyclerView recyclerView;
+    private MainAdapter mAdapter;
+    private RecyclerView.LayoutManager mLayout;
     private FloatingActionButton fab01Add;
     private boolean isAdd = false;
     private RelativeLayout rlAddBill;
@@ -40,6 +45,14 @@ public class MainActivity extends AppCompatActivity
         setContentView(R.layout.activity_main);
         //主界面的recycview , xml文件在content_main中
         recyclerView = (RecyclerView) findViewById(R.id.recyclerview);
+
+        mLayout = new LinearLayoutManager(this);
+        recyclerView.setLayoutManager(mLayout);
+
+        DaoSession daoSession = ((NotesApp) getApplication()).getDaoSession();
+        mAdapter = new MainAdapter(daoSession);
+        recyclerView.setAdapter(mAdapter);
+
         //app顶部toolbar
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         //对悬浮纽的初始化和点击监听
