@@ -29,6 +29,7 @@ public class MainAdapter extends RecyclerView.Adapter<MainAdapter.MainViewHolder
     private Query<Note> noteQuery;
     private Query<Reminder> reminderQuery;
     private MainClickListener clickListener;
+    private MainClickListener lclickListener;
 
     private static final String TAG = "MainAdapter";
 
@@ -40,7 +41,7 @@ public class MainAdapter extends RecyclerView.Adapter<MainAdapter.MainViewHolder
         public TextView title;
         public TextView date;
 
-        public MainViewHolder(View itemView, final MainClickListener clickListener) {
+        public MainViewHolder(View itemView, final MainClickListener clickListener, final MainClickListener lclickListener) {
             super(itemView);
             title = itemView.findViewById(R.id.ItemTitle);
             date = itemView.findViewById(R.id.ItemDate);
@@ -53,12 +54,23 @@ public class MainAdapter extends RecyclerView.Adapter<MainAdapter.MainViewHolder
                 }
             });
 
+            itemView.setOnLongClickListener(new View.OnLongClickListener() {
+                @Override
+                public boolean onLongClick(View v) {
+                    int position = getAdapterPosition();
+                    if(lclickListener != null)
+                        lclickListener.onClick(position);
+                    return true;
+                }
+            });
+
         }
     }
 
-    public MainAdapter(DaoSession daoSession, MainClickListener clickListener) {
+    public MainAdapter(DaoSession daoSession, MainClickListener clickListener, MainClickListener lclickListener) {
         super();
         this.clickListener = clickListener;
+        this.lclickListener = lclickListener;
         noteDao = daoSession.getNoteDao();
         reminderDao = daoSession.getReminderDao();
         noteQuery = noteDao.queryBuilder().orderDesc(NoteDao.Properties.Date).build();
@@ -91,7 +103,7 @@ public class MainAdapter extends RecyclerView.Adapter<MainAdapter.MainViewHolder
     @Override
     public MainViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
         View view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.main_recycler_item, viewGroup, false);
-        return new MainViewHolder(view, clickListener);
+        return new MainViewHolder(view, clickListener, lclickListener);
     }
 
     @Override
