@@ -19,9 +19,13 @@ import java.util.List;
 public class ReminderService extends JobIntentService {
 
     private static final String TAG = "ReminderService";
+    private static boolean started = false;
 
     @Override
     protected void onHandleWork(Intent intent) {
+        if (started)
+            return;
+        started = true;
         DaoSession daoSession = ((NotesApp) getApplication()).getDaoSession();
         ReminderDao reminderDao = daoSession.getReminderDao();
         Log.i(TAG, "onHandleIntent: now in");
