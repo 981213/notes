@@ -2,6 +2,7 @@ package com.example.asus.notes;
 
 import android.animation.AnimatorInflater;
 import android.animation.AnimatorSet;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -90,6 +91,8 @@ public class MainActivity extends AppCompatActivity
             @Override
             public void onClick(View view) {
                 hideFABMenu();
+                Intent intent = new Intent(MainActivity.this, ListActivity.class);
+                startActivity(intent);
             }
         });
         //备忘录悬浮纽的点击事件

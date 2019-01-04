@@ -1,13 +1,16 @@
 package com.example.asus.notes;
 
 import android.content.Context;
+import android.drm.DrmStore;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.BaseAdapter;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
@@ -17,7 +20,8 @@ public class ListActivity extends android.app.ListActivity {
 
     private EditText titleEditText;
     private EditText contentEditText;
-    private String[] items;
+    private Button addItemButton;
+    private String[] items = {"buy apples", "buy bananas"};
     private static int contentCnt;
 
     @Override
@@ -26,31 +30,22 @@ public class ListActivity extends android.app.ListActivity {
         setContentView(R.layout.activity_list);
         titleEditText = (EditText) findViewById(R.id.list_title_input);
         contentEditText = (EditText) findViewById(R.id.list_content_input);
+        addItemButton = (Button) findViewById(R.id.add_item);
+        addItemButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                String content = contentEditText.getText().toString();
+                if (content != null){
+                    Log.d("CONTENT", "SUCCESSFUL");
+                    items[contentCnt++] = content;
+                    contentEditText.clearComposingText();
+                }
+            }
+        });
         contentCnt = 0; //当有数据存储时，等于上一次保留的count
         setListAdapter(new MyAdapter());
     }
 
-    private View.OnKeyListener onKeyListener = new View.OnKeyListener() {
-
-        @Override
-        public boolean onKey(View v, int keyCode, KeyEvent event) {
-            if(keyCode == KeyEvent.KEYCODE_ENTER && event.getAction() == KeyEvent.ACTION_DOWN){
-                /*隐藏软键盘*/
-                InputMethodManager inputMethodManager = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
-                if(inputMethodManager.isActive()){
-                    inputMethodManager.hideSoftInputFromWindow(v.getApplicationWindowToken(), 0);
-                }
-
-                String content = getEditTextContent();
-                if (content != null){
-                    items[contentCnt++] = content;
-                }
-
-                return true;
-            }
-            return false;
-        }
-    };
 
     private class MyAdapter extends BaseAdapter {
         @Override
@@ -74,7 +69,7 @@ public class ListActivity extends android.app.ListActivity {
                 convertView = getLayoutInflater().inflate(R.layout.list_item, container, false);
             }
 
-            ((TextView) convertView.findViewById(android.R.id.text1))
+            ((TextView) convertView.findViewById(R.id.text1))
                     .setText(getItem(i));
             return convertView;
         }
@@ -85,12 +80,12 @@ public class ListActivity extends android.app.ListActivity {
 
 
     String getEditTextTitle(){
-        String title = titleText.getText().toString();
+        String title = titleEditText.getText().toString();
         return title;
     }
 
     String getEditTextContent(){
-        String content = contentText.getText().toString();
+        String content = contentEditText.getText().toString();
         return content;
     }
 }
