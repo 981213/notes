@@ -8,6 +8,7 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -47,7 +48,24 @@ public class MainActivity extends AppCompatActivity
     private ReminderDao reminderDao;
 
     public static final String RECORD_ID = "com.example.asus.notes.RECORD_ID";
+    private static final String TAG = "MainActivity";
 
+    MainAdapter.MainClickListener mainClickListener = new MainAdapter.MainClickListener() {
+        @Override
+        public void onClick(int position) {
+            if(mAdapter.isNote) {
+                long cid = mAdapter.getNote(position).getId();
+                Intent intent = new Intent(MainActivity.this, NoteActivity.class);
+                intent.putExtra(RECORD_ID, cid);
+                startActivity(intent);
+            } else {
+                long cid = mAdapter.getReminder(position).getId();
+                Intent intent = new Intent(MainActivity.this, ListActivity.class);
+                intent.putExtra(RECORD_ID, cid);
+                startActivity(intent);
+            }
+        }
+    };
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -62,7 +80,7 @@ public class MainActivity extends AppCompatActivity
         noteDao = daoSession.getNoteDao();
         reminderDao = daoSession.getReminderDao();
 
-        mAdapter = new MainAdapter(daoSession);
+        mAdapter = new MainAdapter(daoSession, mainClickListener);
         recyclerView.setAdapter(mAdapter);
 
         //app顶部toolbar
@@ -127,6 +145,7 @@ public class MainActivity extends AppCompatActivity
                 hideFABMenu();
                 Intent intent = new Intent(MainActivity.this, ListActivity.class);
                 intent.putExtra(RECORD_ID, entry.getId());
+                Log.i(TAG, "onClick: Add Reminder: " + entry.getId());
                 startActivity(intent);
             }
         });
@@ -141,6 +160,7 @@ public class MainActivity extends AppCompatActivity
                 hideFABMenu();
                 Intent intent = new Intent(MainActivity.this, NoteActivity.class);
                 intent.putExtra(RECORD_ID, entry.getId());
+                Log.i(TAG, "onClick: Add Note: " + entry.getId());
                 startActivity(intent);
             }
         });
