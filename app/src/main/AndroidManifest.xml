@@ -34,6 +34,7 @@
         </activity>
         <service
             android:name=".ReminderService"
+            android:permission="android.permission.BIND_JOB_SERVICE"
             android:exported="false"></service>
     </application>
 
