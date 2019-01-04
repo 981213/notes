@@ -1,5 +1,6 @@
 package com.example.asus.notes;
 
+import android.app.TimePickerDialog;
 import android.content.Context;
 import android.drm.DrmStore;
 import android.support.v7.app.AppCompatActivity;
@@ -13,8 +14,10 @@ import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.TimePicker;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 
 import static android.provider.ContactsContract.CommonDataKinds.Website.URL;
 
@@ -22,7 +25,9 @@ public class ListActivity extends android.app.ListActivity {
 
     private EditText titleEditText;
     private EditText contentEditText;
+    private String title;
     private Button addItemButton;
+    private Button setTimeButton;
 //    private String[] items = new String[20];
     private ArrayList<String> items;
     private MyAdapter myAdapter;
@@ -33,7 +38,8 @@ public class ListActivity extends android.app.ListActivity {
         setContentView(R.layout.activity_list);
         titleEditText = (EditText) findViewById(R.id.list_title_input);
         contentEditText = (EditText) findViewById(R.id.list_content_input);
-        items = new ArrayList<String>();
+        title = titleEditText.getText().toString();
+        items = new ArrayList<>();
         addItemButton = (Button) findViewById(R.id.add_item);
         addItemButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -43,8 +49,15 @@ public class ListActivity extends android.app.ListActivity {
                     Log.d("CONTENT", "SUCCESSFUL");
                     items.add(content);
                     myAdapter.notifyDataSetChanged();
-                    contentEditText.clearComposingText();
+                    contentEditText.setText("");
                 }
+            }
+        });
+        setTimeButton = (Button) findViewById(R.id.set_time);
+        setTimeButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
             }
         });
         myAdapter = new MyAdapter();
@@ -79,7 +92,6 @@ public class ListActivity extends android.app.ListActivity {
             return convertView;
         }
     }
-
 
 
 
