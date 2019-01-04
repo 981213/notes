@@ -15,10 +15,11 @@ import com.example.asus.notes.db.ReminderDao;
 
 import org.greenrobot.greendao.query.Query;
 
+import java.util.Date;
 import java.util.List;
 
 public class MainAdapter extends RecyclerView.Adapter<MainAdapter.MainViewHolder> {
-    private boolean isNote = true;
+    public boolean isNote = true;
     private List<Note> noteset;
     private List<Reminder> reminderset;
 
@@ -92,7 +93,11 @@ public class MainAdapter extends RecyclerView.Adapter<MainAdapter.MainViewHolder
         } else {
             Reminder cur = getReminder(i);
             mainViewHolder.title.setText(cur.getTitle());
-            mainViewHolder.date.setText(cur.getRemindDate().toString());
+            Date remindDate = cur.getRemindDate();
+            if(remindDate != null)
+                mainViewHolder.date.setText(remindDate.toString());
+            else
+                mainViewHolder.date.setText("");
         }
     }
 

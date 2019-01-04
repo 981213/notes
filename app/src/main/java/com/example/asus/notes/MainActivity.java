@@ -21,6 +21,10 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 
 import com.example.asus.notes.db.DaoSession;
+import com.example.asus.notes.db.Note;
+import com.example.asus.notes.db.NoteDao;
+import com.example.asus.notes.db.Reminder;
+import com.example.asus.notes.db.ReminderDao;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -38,6 +42,11 @@ public class MainActivity extends AppCompatActivity
     private AnimatorSet addBillTranslate1;
     private AnimatorSet addBillTranslate2;
 
+    private DaoSession daoSession;
+    private NoteDao noteDao;
+    private ReminderDao reminderDao;
+
+    public static final String RECORD_ID = "com.example.asus.notes.RECORD_ID";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,7 +58,10 @@ public class MainActivity extends AppCompatActivity
         mLayout = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(mLayout);
 
-        DaoSession daoSession = ((NotesApp) getApplication()).getDaoSession();
+        daoSession = ((NotesApp) getApplication()).getDaoSession();
+        noteDao = daoSession.getNoteDao();
+        reminderDao = daoSession.getReminderDao();
+
         mAdapter = new MainAdapter(daoSession);
         recyclerView.setAdapter(mAdapter);
 
@@ -71,6 +83,11 @@ public class MainActivity extends AppCompatActivity
         navigationView.setNavigationItemSelectedListener(this);
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        mAdapter.UpdateItems();
+    }
 
     private void initView() {
         fab01Add = (FloatingActionButton) findViewById(R.id.fab01Add);
@@ -103,8 +120,13 @@ public class MainActivity extends AppCompatActivity
         miniFab01.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                Reminder entry = new Reminder();
+                entry.setTitle("");
+                entry.setContent("");
+                reminderDao.insert(entry);
                 hideFABMenu();
                 Intent intent = new Intent(MainActivity.this, ListActivity.class);
+                intent.putExtra(RECORD_ID, entry.getId());
                 startActivity(intent);
             }
         });
@@ -112,8 +134,13 @@ public class MainActivity extends AppCompatActivity
         miniFab02.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                Note entry = new Note();
+                entry.setTitle("");
+                entry.setContent("");
+                noteDao.insert(entry);
                 hideFABMenu();
                 Intent intent = new Intent(MainActivity.this, NoteActivity.class);
+                intent.putExtra(RECORD_ID, entry.getId());
                 startActivity(intent);
             }
         });
@@ -161,14 +188,15 @@ public class MainActivity extends AppCompatActivity
     }
 
     //侧边栏的点击事件
-    @SuppressWarnings("StatementWithEmptyBody")
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
         int id = item.getItemId();
         if (id == R.id.nav_list) {
-
+            mAdapter.isNote = false;
+            mAdapter.UpdateItems();
         } else if (id == R.id.nav_document) {
-
+            mAdapter.isNote = true;
+            mAdapter.UpdateItems();
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
