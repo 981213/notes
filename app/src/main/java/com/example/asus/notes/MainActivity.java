@@ -28,6 +28,7 @@ import com.example.asus.notes.db.Note;
 import com.example.asus.notes.db.NoteDao;
 import com.example.asus.notes.db.Reminder;
 import com.example.asus.notes.db.ReminderDao;
+import com.example.asus.notes.db.ReminderEntryDao;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -83,7 +84,11 @@ public class MainActivity extends AppCompatActivity
                             if (mAdapter.isNote) {
                                 noteDao.delete(mAdapter.getNote(wpos));
                             } else {
-                                reminderDao.delete(mAdapter.getReminder(wpos));
+                                Reminder entr = mAdapter.getReminder(wpos);
+                                ReminderEntryDao dao = daoSession.getReminderEntryDao();
+                                dao.queryBuilder().where(ReminderEntryDao.Properties.ReminderId.eq(entr.getId())).buildDelete().executeDeleteWithoutDetachingEntities();
+                                daoSession.clear();
+                                reminderDao.delete(entr);
                             }
                             mAdapter.UpdateItems();
                         }

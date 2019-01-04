@@ -50,7 +50,6 @@ public class ReminderService extends JobIntentService {
         started = true;
         DaoSession daoSession = ((NotesApp) getApplication()).getDaoSession();
         ReminderDao reminderDao = daoSession.getReminderDao();
-        Log.i(TAG, "onHandleIntent: now in");
         createNotificationChannel();
         NotificationManagerCompat notificationManager = NotificationManagerCompat.from(this);
         while (true) {
@@ -72,7 +71,6 @@ public class ReminderService extends JobIntentService {
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
-            Log.i(TAG, "onHandleIntent: triggered once");
         }
     }
 }
