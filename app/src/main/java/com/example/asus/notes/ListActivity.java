@@ -1,5 +1,6 @@
 package com.example.asus.notes;
 
+import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
 import android.content.Context;
 import android.drm.DrmStore;
@@ -12,12 +13,14 @@ import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.BaseAdapter;
 import android.widget.Button;
+import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.TimePicker;
 
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 
 import static android.provider.ContactsContract.CommonDataKinds.Website.URL;
 
@@ -31,6 +34,9 @@ public class ListActivity extends android.app.ListActivity {
 //    private String[] items = new String[20];
     private ArrayList<String> items;
     private MyAdapter myAdapter;
+
+    private int mYear, mMonth, mDay, mHour, mMinute;
+    //private String date_time;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,13 +63,61 @@ public class ListActivity extends android.app.ListActivity {
         setTimeButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
+                datePicker();
+                Calendar cal = Calendar.getInstance();
+                cal.set(mYear, mMonth, mDay, mHour, mMinute);
+                Date date = cal.getTime();
             }
         });
         myAdapter = new MyAdapter();
         setListAdapter(myAdapter);
     }
 
+    private void datePicker(){
+
+        // Get Current Date
+        final Calendar c = Calendar.getInstance();
+        mYear = c.get(Calendar.YEAR);
+        mMonth = c.get(Calendar.MONTH);
+        mDay = c.get(Calendar.DAY_OF_MONTH);
+
+        DatePickerDialog datePickerDialog = new DatePickerDialog(this,
+                new DatePickerDialog.OnDateSetListener() {
+
+                    @Override
+                    public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
+
+                        //date_time = dayOfMonth + "-" + (monthOfYear + 1) + "-" + year;
+                        //*************Call Time Picker Here ********************
+                        timePicker();
+                    }
+                }, mYear, mMonth, mDay);
+        datePickerDialog.show();
+    }
+
+    private void timePicker(){
+        // Get Current Time
+        final Calendar c = Calendar.getInstance();
+        mHour = c.get(Calendar.HOUR_OF_DAY);
+        mMinute = c.get(Calendar.MINUTE);
+
+        // Launch Time Picker Dialog
+        TimePickerDialog timePickerDialog = new TimePickerDialog(this,
+                new TimePickerDialog.OnTimeSetListener() {
+
+                    @Override
+                    public void onTimeSet(TimePicker view, int hourOfDay,int minute) {
+
+                        mHour = hourOfDay;
+                        mMinute = minute;
+
+                        //date_time += (" " + hourOfDay + ":" + minute);
+                        //titleEditText.setText(date_time);
+                        //et_show_date_time.setText(date_time+" "+hourOfDay + ":" + minute);
+                    }
+                }, mHour, mMinute, false);
+        timePickerDialog.show();
+    }
 
     private class MyAdapter extends BaseAdapter {
         @Override
