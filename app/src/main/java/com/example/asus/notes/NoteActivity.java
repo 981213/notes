@@ -22,8 +22,6 @@ public class NoteActivity extends AppCompatActivity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.note_edit, menu);
-        MenuItem menuItem = menu.findItem(R.id.action_save);
-        //menu.setIntent(@para);
         return true;
     }
 

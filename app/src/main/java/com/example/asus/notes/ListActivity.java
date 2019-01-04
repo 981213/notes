@@ -22,7 +22,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 
-import static android.provider.ContactsContract.CommonDataKinds.Website.URL;
+
 
 public class ListActivity extends android.app.ListActivity {
 
