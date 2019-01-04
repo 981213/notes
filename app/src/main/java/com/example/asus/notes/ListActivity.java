@@ -122,12 +122,6 @@ public class ListActivity extends android.app.ListActivity {
 
     private void datePicker(){
 
-        // Get Current Date
-//        final Calendar c = Calendar.getInstance();
-//        mYear = c.get(Calendar.YEAR);
-//        mMonth = c.get(Calendar.MONTH);
-//        mDay = c.get(Calendar.DAY_OF_MONTH);
-
         DatePickerDialog datePickerDialog = new DatePickerDialog(this,
                 new DatePickerDialog.OnDateSetListener() {
 
@@ -146,10 +140,6 @@ public class ListActivity extends android.app.ListActivity {
     }
 
     private void timePicker(){
-        // Get Current Time
-//        final Calendar c = Calendar.getInstance();
-//        mHour = c.get(Calendar.HOUR_OF_DAY);
-//        mMinute = c.get(Calendar.MINUTE);
 
         // Launch Time Picker Dialog
         TimePickerDialog timePickerDialog = new TimePickerDialog(this,
