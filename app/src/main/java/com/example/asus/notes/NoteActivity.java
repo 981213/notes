@@ -62,7 +62,7 @@ public class NoteActivity extends AppCompatActivity {
 
         if (id == R.id.action_save){
             saveNote();
-            Toast.makeText(this, "Note is saved", Toast.LENGTH_SHORT)
+            Toast.makeText(this, "备忘录已保存", Toast.LENGTH_SHORT)
                     .show();
             return true;
         }

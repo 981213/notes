@@ -18,6 +18,7 @@ import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.TimePicker;
+import android.widget.Toast;
 
 import com.example.asus.notes.db.DaoSession;
 import com.example.asus.notes.db.Note;
@@ -117,6 +118,7 @@ public class ListActivity extends android.app.ListActivity {
     @Override
     protected void onPause() {
         saveReminder();
+        Toast.makeText(this, "清单事项已保存", Toast.LENGTH_SHORT).show();
         super.onPause();
     }
 
@@ -153,7 +155,7 @@ public class ListActivity extends android.app.ListActivity {
                         Calendar cal = Calendar.getInstance();
                         cal.set(mYear, mMonth, mDay, mHour, mMinute);
                         Date date = cal.getTime();
-                        contentEditText.setText(date.toString());
+                        //contentEditText.setText(date.toString());
                         Log.i("DATE", "onClick: " + date.toString());
                         reminder.setRemindDate(date);
 

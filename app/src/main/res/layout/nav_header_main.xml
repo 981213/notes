@@ -25,6 +25,6 @@
         android:id="@+id/textView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="SCUT_cs2" />
+        android:text="SCUT_CS2_Group6" />
 
 </LinearLayout>
