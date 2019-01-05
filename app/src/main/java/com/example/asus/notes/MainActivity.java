@@ -75,8 +75,8 @@ public class MainActivity extends AppCompatActivity
         public void onClick(int position) {
             final int wpos = position;
             new AlertDialog.Builder(MainActivity.this)
-                    .setTitle("Confirm")
-                    .setMessage("Do you really want to delete this?")
+                    .setTitle("确认")
+                    .setMessage("您确定要删除吗？")
                     .setIcon(android.R.drawable.ic_dialog_alert)
                     .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
 

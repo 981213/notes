@@ -131,8 +131,7 @@ public class ListActivity extends android.app.ListActivity {
                         mYear = year;
                         mMonth = monthOfYear;
                         mDay = dayOfMonth;
-                        //date_time = dayOfMonth + "-" + (monthOfYear + 1) + "-" + year;
-                        //*************Call Time Picker Here ********************
+
                         timePicker();
                     }
                 }, mYear, mMonth, mDay);

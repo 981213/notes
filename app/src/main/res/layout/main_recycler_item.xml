@@ -8,8 +8,12 @@
         android:id="@+id/ItemTitle"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:padding="10dp"
+        android:layout_margin="4dp"
+        android:textStyle="bold"
         android:text="TextView"
-        android:textSize="24sp" />
+        android:background="@drawable/main_activity_view"
+        android:textSize="22sp" />
 
     <TextView
         android:id="@+id/ItemDate"
